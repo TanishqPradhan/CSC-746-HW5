@@ -51,11 +51,13 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 
    // ADD CODE HERE: add your code here for computing the sobel stencil computation at location (i,j)
    // of input s, returning a float
-   float Gx = 0.0;
-   float Gy = 0.0;
+   float Gx = 0.0f;
+   float Gy = 0.0f;
 
    // ADD CODE HERE: add your code here for computing the sobel stencil computation at location (i,j)
    // of input s, returning a float
+   if(i > 0 && i < nrows-1 && j > 0 && j < ncols-1)
+   {
    for(int a = 0; a<3; a++)
    {
    	for(int b =0; b<3; b++)
@@ -65,7 +67,7 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    		Gy += gy[a*3 + b]*fPixel;
    	}
    }
-   
+}
 
 
    return sqrtf(Gx*Gx + Gy*Gy);
@@ -126,6 +128,7 @@ do_sobel_filtering(float *in, float *out, int ncols, int nrows)
    // if you are using nested loops.
 
    } // pragma omp target data
+}
 }
 
 

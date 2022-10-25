@@ -66,6 +66,8 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    float Gx = 0.0f;
    float Gy = 0.0f;
    
+   if(i > 0 && i < nrows-1 && j > 0 && j < ncols-1){
+      
    for(int a = 0; a<3; a++)
    {
    	for(int b =0; b<3; b++)
@@ -76,7 +78,7 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    	}
    }
    
-
+   }
 
    return sqrtf(Gx*Gx + Gy*Gy);
    //return t;
@@ -183,11 +185,11 @@ main (int ac, char *av[])
    // ADD CODE HERE: insert your code here to set a different number of thread blocks or # of threads per block
    if(ac>1)
    {
-   	nThreadsPerBlock = atoi(av[1]);
+   	nBlocks = atoi(av[1]);
    }
    if(ac>2)
    {
-   	nBlocks = atoi(av[2]);
+   	nThreadsPerBlock = atoi(av[2]);
    }
 
    printf(" GPU configuration: %d blocks, %d threads per block \n", nBlocks, nThreadsPerBlock);
