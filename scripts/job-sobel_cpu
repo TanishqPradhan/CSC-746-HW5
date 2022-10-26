@@ -16,7 +16,7 @@ for N in 1 2 4 8 16
     do
 
     export OMP_NUM_THREADS=$N
-    echo srun -n 1 ./sobel_cpu $N
-    srun -n 1 ./sobel_cpu $N
+    echo ./sobel_cpu $N
+    ./sobel_cpu $N
 
 done
