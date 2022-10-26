@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#SBATCH --constraint=knl
+#SBATCH --cpus-per-task=1
+#SBATCH --qos=debug
+#SBATCH --nodes=1
+#SBATCH --time=00:04:00
+#SBATCH --cpu-freq=1400000
+#SBATCH --job-name=job-sobel_cpu
+#SBATCH --output=job-sobel_cpu.o%j
+#SBATCH --error=job-sobel_cpu.e%j
+
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+
+for N in 1 2 4 8 16
+    do
+
+    export OMP_NUM_THREADS=$N
+    echo srun -n 1 ./sobel_cpu $N
+    srun -n 1 ./sobel_cpu $N
+
+done

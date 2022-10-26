@@ -1,0 +1,18 @@
+#!/bin/bash -l
+#SBATCH -N 1
+#SBATCH -c 10
+#SBATCH -G 1
+#SBATCH -C gpu
+#SBATCH -t 5:00
+#SBATCH -J queue
+#SBATCH --job-name=job-sobel_cpu_omp_offload
+#SBATCH --output=job-sobel_cpu_omp_offload.o%j
+#SBATCH --error=job-sobel_cpu_omp_offload.e%j
+
+export LIBOMPTARGET_INFO=4
+
+echo nvprof ./sobel_cpu_omp_offload
+nvprof ./sobel_cpu_omp_offload
+
+echo nvprof -m sm_efficiency ./sobel_cpu_omp_offload
+nvprof -m sm_efficiency ./sobel_cpu_omp_offload

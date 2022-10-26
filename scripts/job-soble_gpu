@@ -1,0 +1,40 @@
+#!/bin/bash -l
+#SBATCH -N 1
+#SBATCH -c 10
+#SBATCH -G 1
+#SBATCH -C gpu
+#SBATCH -t 5:00
+#SBATCH -J queue
+#SBATCH --job-name=job-sobel_gpu
+#SBATCH --output=job-sobel_gpu.o%j
+#SBATCH --error=job-sobel_gpu.e%j
+
+export LIBOMPTARGET_INFO=4
+
+#For runtime
+for t in 32 64 128 256 512 1024
+    do
+
+    for b in 1 4 16 64 256 1024 4096
+        do
+
+        echo nvprof ./sobel_gpu $t $b
+        nvprof ./sobel_gpu $t $b
+    
+    done
+
+done
+
+#For sm_efficiency.
+for t in 32 64 128 256 512 1024
+    do
+
+    for b in 1 4 16 64 256 1024 4096
+        do
+
+        echo nvprof -m sm_efficiency ./sobel_gpu $t $b
+        nvprof -m sm_efficiency ./sobel_gpu $t $b
+    
+    done
+
+done
